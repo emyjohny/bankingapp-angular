@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "bankApp"
+    }
+  },
+  "defaultProject": "bankApp",
+  "cli": {
+    "analytics": false
+  }
 }
