@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+        </div>
+        <div class=jumbotron>
+        <div class="col">
+            <h2>Welcome to SBT</h2>
+            <form>
+                <div class="form-group">
+                  <label for="acno">AccountNumber</label>
+                  <input (change)="acnoChange($event)"type="text" class="form-control" id="acno" >
+                  
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Password</label>
+                  <input (change)="pswChange($event)" type="password" class="form-control" id="pwd">
+                </div>
+               
+                <button type="button" class="btn btn-primary" (click)="login()">Submit</button>
+              </form>
+        </div>
+    </div>
+        <div class="col">
+            
+        </div>
+    </div>
+
+</div>
