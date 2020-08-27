@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     1004:{name:"user4",acno:1004,pin:1236,password:"userfour",balance:3000},
     1005:{name:"user5",acno:1005,pin:1237,password:"userfive",balance:3000},
 }
-acno="";
+ acno=""; //same name to be used while using ngModel
 psw="";
 acnoChange(event){
   // alert("changed")
@@ -29,6 +29,10 @@ pswChange(event){
   ngOnInit(): void {
   }
   login(){
+    // var acno=parseInt(this.acno);
+    // var password=this.psw;
+    // var acno=parseInt(abc.value);
+    //  var password=def.value;
     var acno=parseInt(this.acno);
     var password=this.psw;
     try{
