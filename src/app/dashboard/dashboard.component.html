@@ -1,0 +1,44 @@
+<h1>Welcome User</h1>
+<div class="container">
+    <div class="row"> 
+<div class="col">
+   <h1>Deposit</h1>
+<table>
+<tr>
+    <td>accno</td>
+    <td><input [(ngModel)]="accno" name="accno" type="text" id="acno"></td>
+</tr>
+<tr> <td>pin</td>
+<td><input [(ngModel)]="pin" name="pin" type="text" id="pin"></td>
+</tr>
+<tr><td>Amount</td>
+<td><input [(ngModel)]="amount" name="amount" type="text" id="amt"></td>
+</tr>
+<tr>
+<td><input type="button" value="Proceed" (click)="deposit()"></td>
+</tr>
+</table>
+</div> 
+<div class="col">
+<h1>Withdraw</h1>
+<table>
+    <tr>
+        <td>accno</td>
+        <td><input [(ngModel)]="accno1" name="accno1"type="text" id="acno1"></td>
+    </tr>
+    <tr> <td>pin</td>
+    <td><input [(ngModel)]="pin1" name="pin1" type="text" id="pin1"></td>
+</tr>
+<tr><td>Amount</td>
+<td><input [(ngModel)]="amount1" name="amount1" type="text" id="amt1"></td>
+</tr>
+<tr>
+    <td><input type="button" value="Proceed" (click)="withdraw()"></td>
+    </tr>
+</table>
+</div> 
+
+
+
+</div>
+</div>
