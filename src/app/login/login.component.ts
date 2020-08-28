@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ this.acno=event.target.value;
 pswChange(event){
   this.psw=event.target.value;
 }
-  constructor() { }
+  constructor(private router:Router) { }  
+  // dependancy injection
 
   ngOnInit(): void {
   }
@@ -49,7 +51,8 @@ pswChange(event){
       var pwd=data[acno].password
       if(pwd==password){
           alert("login successfull")
-          window.location.href="homepage.html"
+          // window.location.href="homepage.html"
+          this.router.navigateByUrl("register")
       }
       else{
 alert("incorrect username or password")
