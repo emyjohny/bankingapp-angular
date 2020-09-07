@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import {DataService} from '../services/data.service'
+import {Router} from '@angular/router';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+registerForm =this.fb.group({
+  name:['',[Validators.required]],
+  acno:['',[Validators.required,Validators.minLength(3)]],
+psw:['',[Validators.required]],
+pin:['',[Validators.required]]
+});
+  constructor(private router:Router,private dataService:DataService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
+  getError(name){
+   return this.registerForm.get(name).errors
+  }
+register(){
+  // console.log(this.registerForm.value);
+  if(this.registerForm.valid){
+  const result=this.dataService.register(
+    this.registerForm.value.name,
+    this.registerForm.value.acno,
+    this.registerForm.value.pin,
+    this.registerForm.value.psw
+  );
+  if(result){
+    // alert("successfully created account.Please Log in");
+this.router.navigateByUrl("");
+  }
+ }
 
+else{
+  alert("form is invalid");
+}}
 }
