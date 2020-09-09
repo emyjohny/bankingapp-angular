@@ -11,6 +11,7 @@ export class DataService {
     1004:{name:"user4",acno:1004,pin:1236,password:"userfour",balance:3000},
     1005:{name:"user5",acno:1005,pin:1237,password:"userfive",balance:3000},
 }
+currentUser;
   constructor() { }
   register(name,acno,pin,password){
     if(acno in this.accountDetails){
@@ -26,5 +27,16 @@ this.accountDetails[acno]={
 }
 console.log(this.accountDetails)
 return true;
+  }
+  login(acno1,password){
+    var acno=parseInt(acno1);
+    var data=this.accountDetails;
+    if(acno in data){
+      var pwd =data[acno].password
+      if(pwd==password){
+        this.currentUser=data[acno];
+    return true;
+      }
+    }
   }
 }

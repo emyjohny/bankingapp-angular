@@ -1,41 +1,55 @@
-<h1>Welcome User</h1>
+
 <div class="container">
+    <h1 id="head1">Welcome {{dataService.currentUser.name}}</h1>
+ <br>
     <div class="row"> 
 <div class="col">
+    
    <h1>Deposit</h1>
+   <form [formGroup]="depositForm" (ngSubmit)="deposit()" >
 <table>
 <tr>
-    <td>accno</td>
-    <td><input [(ngModel)]="accno" name="accno" type="text" id="acno"></td>
+    <td>AccountNumber</td>
+    <td><input formControlName="accno" name="accno" type="text" id="acno"></td>
 </tr>
-<tr> <td>pin</td>
-<td><input [(ngModel)]="pin" name="pin" type="text" id="pin"></td>
+<div *ngIf="depositError('accno')" class="errors">Invalid account number</div>
+
+<tr> <td>Pin</td>
+<td><input formControlName="pin" name="pin" type="text" id="pin"></td>
 </tr>
+<div *ngIf="depositError('pin')" class="errors">Invalid pin</div>
 <tr><td>Amount</td>
-<td><input [(ngModel)]="amount" name="amount" type="text" id="amt"></td>
+<td><input formControlName="amount" name="amount" type="text" id="amt"></td>
 </tr>
+<div *ngIf="depositError('amount')" class="errors">Invalid amount</div>
 <tr>
-<td><input type="button" value="Proceed" (click)="deposit()"></td>
+<td><input type="submit" value="Proceed" ></td>
 </tr>
 </table>
+</form>
 </div> 
 <div class="col">
 <h1>Withdraw</h1>
+<form [formGroup]="withdrawForm" (ngSubmit)="withdraw()" >
 <table>
     <tr>
-        <td>accno</td>
-        <td><input [(ngModel)]="accno1" name="accno1"type="text" id="acno1"></td>
+        <td>AccountNumber</td>
+        <td><input formControlName="accno1" name="accno1"type="text" id="acno1"></td>
     </tr>
-    <tr> <td>pin</td>
-    <td><input [(ngModel)]="pin1" name="pin1" type="text" id="pin1"></td>
+    <div *ngIf="withdrawError('accno1')" class="errors">Invalid account number</div>
+    <tr> <td>Pin</td>
+    <td><input formControlName="pin1" name="pin1" type="text" id="pin1"></td>
 </tr>
+<div *ngIf="withdrawError('pin1')" class="errors">Invalid pin</div>
 <tr><td>Amount</td>
-<td><input [(ngModel)]="amount1" name="amount1" type="text" id="amt1"></td>
+<td><input formControlName="amount1" name="amount1" type="text" id="amt1"></td>
 </tr>
+<div *ngIf="withdrawError('amount1')" class="errors">Invalid amount</div>
 <tr>
-    <td><input type="button" value="Proceed" (click)="withdraw()"></td>
+    <td><input type="submit" value="Proceed" ></td>
     </tr>
 </table>
+</form>
 </div> 
 
 

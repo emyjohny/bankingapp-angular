@@ -5,25 +5,20 @@
         </div>
         <div class=jumbotron>
         <div class="col">
-            <h2>Welcome to SBT</h2>
-            <form>
+            <h2>Welcome to SIB</h2>
+            <form [formGroup]="loginForm" (ngSubmit)="login()" >
                 <div class="form-group">
-                  {{ acno }}
+               
                   <label for="acno">AccountNumber</label>
-                  <!-- <input (change)="acnoChange($event)"type="text" class="form-control" id="acno" > -->
-                 <!-- 1st method(event binding)2nd method(template reference) 3rd method(ng model) -->
-                  <!-- <input #acno type="text" class="form-control" id="acno" > -->
-                  <input [(ngModel)]="acno" name="acno" type="text" class="form-control" id="acno" >
-                  
+                  <input formControlName="acno" name="acno" type="text" class="form-control" id="acno" >
+                  <div class="l_error" *ngIf="loginError('acno')">Invalid Account number</div>
                 </div>
                 <div class="form-group">
                   <label for="pwd">Password</label>
-                  <!-- <input #pwd type="password" class="form-control" id="pwd"> -->
-                  <input [(ngModel)]="psw" name="psw" type="password" class="form-control" id="pwd">
-                  
+                   <input formControlName="psw" name="psw" type="password" class="form-control" id="pwd">
+                  <div class="l_error" *ngIf="loginError('psw')">Invalid password</div>
                 </div>
-                <!-- <button type="button" class="btn btn-primary" (click)="login()">Submit</button> -->
-               <button type="button" class="btn btn-primary" (click)="login()">Submit</button>
+               <button type="submit" class="btn btn-primary">Submit</button>
               <a routerLink="register">Register</a>
 
               </form>

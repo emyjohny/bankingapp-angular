@@ -1,62 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {DataService} from '../services/data.service';
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
- 
- acno=""; //same name to be used while using ngModel
-psw="";
-acnoChange(event){
-  // alert("changed")
-this.acno=event.target.value;
-// console.log(this.acno)
 
-}
-pswChange(event){
-  this.psw=event.target.value;
-}
+  loginForm=this.fb.group({
+    acno:['',[Validators.required,Validators.pattern("^[0-9]*$")]],
+    psw:['',[Validators.required]]
+  })
+  loginError(field){
+    return (this.loginForm.get(field).touched||this.loginForm.get(field).dirty)&&this.loginForm.get(field).errors
+  }
+
   constructor(private router:Router,
-    private dataService:DataService) { }  
-  // dependancy injection
+    private dataService:DataService,private fb:FormBuilder) { }  
 
   ngOnInit(): void {
   }
-  login(){
-    // var acno=parseInt(this.acno);
-    // var password=this.psw;
-    // var acno=parseInt(abc.value);
-    //  var password=def.value;
-    var acno=parseInt(this.acno);
-    var password=this.psw;
-    try{
-      if(isNaN(acno)) throw "enter a number"
-      if(acno.toString().length<4) throw "length doesnt match"
+  login() {
+    if (this.loginForm.valid) {
+      const result = this.dataService.login(this.loginForm.value.acno,this.loginForm.value.psw);
+      if (result) {
+        alert("Login successful");
+        this.router.navigateByUrl("dashboard")
+      }
+      else {
+        alert("invalid credentials")
+      }
     }
-    catch(err){
-      alert(err)
+    else {
+      alert("Form is invalid")
+      // this.router.navigateByUrl("register")
+    }
 
-    }
-    // alert(acno+","+password);
-    var data=this.dataService.accountDetails;
-  if(acno in data){
-      var pwd=data[acno].password
-      if(pwd==password){
-          alert("login successfull")
-          // window.location.href="homepage.html"
-         this.router.navigateByUrl("dashboard")
-      }
-      else{
-alert("incorrect username or password")
-      }
   }
-    else{
-alert("user does not exist")
-this.router.navigateByUrl("register")
-    }
-  }
-  
 }

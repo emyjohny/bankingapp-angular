@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {DataService} from '../services/data.service'
-import {Router} from '@angular/router';
+import { DataService } from '../services/data.service'
+import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-register',
@@ -9,35 +9,36 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit {
 
-registerForm =this.fb.group({
-  name:['',[Validators.required]],
-  acno:['',[Validators.required,Validators.minLength(3)]],
-psw:['',[Validators.required]],
-pin:['',[Validators.required]]
-});
-  constructor(private router:Router,private dataService:DataService,private fb:FormBuilder) { }
+  registerForm = this.fb.group({
+    name: ['', [Validators.required]],
+    acno: ['', [Validators.required, Validators.minLength(3)]],
+    psw: ['', [Validators.required]],
+    pin: ['', [Validators.required]]
+  });
+  constructor(private router: Router, private dataService: DataService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
-  getError(name){
-   return this.registerForm.get(name).errors
+  getError(name) {
+    return (this.registerForm.get(name).touched || this.registerForm.get(name).dirty) && this.registerForm.get(name).errors;
   }
-register(){
-  // console.log(this.registerForm.value);
-  if(this.registerForm.valid){
-  const result=this.dataService.register(
-    this.registerForm.value.name,
-    this.registerForm.value.acno,
-    this.registerForm.value.pin,
-    this.registerForm.value.psw
-  );
-  if(result){
-    // alert("successfully created account.Please Log in");
-this.router.navigateByUrl("");
-  }
- }
+  register() {
+    // console.log(this.registerForm.value);
+    if (this.registerForm.valid) {
+      const result = this.dataService.register(
+        this.registerForm.value.name,
+        this.registerForm.value.acno,
+        this.registerForm.value.pin,
+        this.registerForm.value.psw
+      );
+      if (result) {
+        // alert("successfully created account.Please Log in");
+        this.router.navigateByUrl("");
+      }
+    }
 
-else{
-  alert("form is invalid");
-}}
+    else {
+      alert("form is invalid");
+    }
+  }
 }

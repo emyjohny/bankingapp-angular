@@ -8,7 +8,7 @@
             <h2>Register here</h2>
             <form [formGroup]="registerForm" (ngSubmit)="register()">
                
-                <div class="form-group">
+                <div class="form-group" >
                     <label for="name">Name</label>
                      <input formControlName="name" type="text" class="form-control" id="name" >
                     <div *ngIf="getError('name')" class="error">Name is invalid</div>

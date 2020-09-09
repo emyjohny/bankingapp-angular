@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from '../services/data.service'
+import { FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,17 +8,22 @@ import {DataService} from '../services/data.service'
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private dataService:DataService) { }
+  constructor(public dataService:DataService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
-  accno="";
-  pin="";
-  amount="";
+  depositForm=this.fb.group({
+    accno:['',[Validators.required,Validators.minLength(4)]],
+    pin:['',[Validators.required]],
+    amount:['',[Validators.required]]
+  })
+ depositError(field){
+   return (this.depositForm.get(field).touched||this.depositForm.get(field).dirty)&&this.depositForm.get(field).errors
+ }
   deposit(){
-    var accnum=this.accno;
-    var pinnum=this.pin;
-    var amount=Number(this.amount);
+    var accnum=this.depositForm.value.accno;
+    var pinnum=this.depositForm.value.pin;
+    var amount=Number(this.depositForm.value.amount);
 var data=this.dataService.accountDetails;
 if(accnum in data){
     let mpin=data[accnum].pin;
@@ -29,13 +35,19 @@ if(accnum in data){
 
 }
 
-accno1="";
-  pin1="";
-  amount1="";
+withdrawForm=this.fb.group({
+  accno1:['',[Validators.required]],
+  pin1:['',[Validators.required]],
+  amount1:['',[Validators.required]]
+})
+withdrawError(field){
+  return (this.withdrawForm.get(field).touched||this.withdrawForm.get(field).dirty)&&this.withdrawForm.get(field).errors
+}
+
 withdraw(){
-    var accnum=this.accno1;
-    var pinnum=this.pin1;
-    var amount=Number(this.amount1); 
+    var accnum=this.withdrawForm.value.accno1;
+    var pinnum=this.withdrawForm.value.pin1;
+    var amount=Number(this.withdrawForm.value.amount1); 
     var data=this.dataService.accountDetails;
 if(accnum in data){
     let mpin=data[accnum].pin;
@@ -45,5 +57,5 @@ if(accnum in data){
     }
 }
 }
-}
+ }
 
