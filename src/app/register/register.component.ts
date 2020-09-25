@@ -30,15 +30,21 @@ export class RegisterComponent implements OnInit {
         this.registerForm.value.acno,
         this.registerForm.value.pin,
         this.registerForm.value.psw
-      );
-      if (result) {
-        // alert("successfully created account.Please Log in");
-        this.router.navigateByUrl("");
-      }
-    }
+      )
+      .subscribe(data=>{
+        if (data) {
+          // alert("successfully created account.Please Log in");
+          this.router.navigateByUrl("");
+        }},(data)=>{
+alert(data.error.message);
 
-    else {
-      alert("form is invalid");
+        })
     }
+  
+      else {
+        alert("form is invalid");
+      }
+      
+      
   }
 }

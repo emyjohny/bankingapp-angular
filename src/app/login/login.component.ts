@@ -24,14 +24,20 @@ export class LoginComponent implements OnInit {
   }
   login() {
     if (this.loginForm.valid) {
-      const result = this.dataService.login(this.loginForm.value.acno,this.loginForm.value.psw);
-      if (result) {
-        alert("Login successful");
-        this.router.navigateByUrl("dashboard")
-      }
-      else {
-        alert("invalid credentials")
-      }
+      const result = this.dataService.login(this.loginForm.value.acno,this.loginForm.value.psw)
+      .subscribe((data:any)=>{
+        if (data) {
+          localStorage.setItem("name",data.name)
+          alert("Login successful");
+          this.router.navigateByUrl("dashboard")
+        }
+      },(data)=>{
+        alert(data.error.message);
+      })
+      
+      // else {
+      //   alert("invalid credentials")
+      // }
     }
     else {
       alert("Form is invalid")

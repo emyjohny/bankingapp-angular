@@ -7,8 +7,10 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor(public dataService:DataService,private fb:FormBuilder) { }
+name=""
+  constructor(public dataService:DataService,private fb:FormBuilder) {
+    this.name=localStorage.getItem("name");
+   }
 
   ngOnInit(): void {
   }
@@ -21,18 +23,14 @@ export class DashboardComponent implements OnInit {
    return (this.depositForm.get(field).touched||this.depositForm.get(field).dirty)&&this.depositForm.get(field).errors
  }
   deposit(){
-    var accnum=this.depositForm.value.accno;
-    var pinnum=this.depositForm.value.pin;
-    var amount=Number(this.depositForm.value.amount);
-var data=this.dataService.accountDetails;
-if(accnum in data){
-    let mpin=data[accnum].pin;
-    if(mpin==pinnum){
-       data[accnum].balance+=amount;
-       alert("amount credited.final balance "+data[accnum].balance) 
+        const result=this.dataService.deposit(this.depositForm.value.accno,this.depositForm.value.pin,this.depositForm.value.amount)
+    if(result.status==true){
+      alert(result.message);
+      alert(result.balance) 
     }
+else{
+alert(result.message)
 }
-
 }
 
 withdrawForm=this.fb.group({
@@ -45,17 +43,14 @@ withdrawError(field){
 }
 
 withdraw(){
-    var accnum=this.withdrawForm.value.accno1;
-    var pinnum=this.withdrawForm.value.pin1;
-    var amount=Number(this.withdrawForm.value.amount1); 
-    var data=this.dataService.accountDetails;
-if(accnum in data){
-    let mpin=data[accnum].pin;
-    if(mpin==pinnum){
-       data[accnum].balance-=amount;
-       alert("Rs."+amount+ " debited. final balance is "+data[accnum].balance) 
+ 
+    const result=this.dataService.withdraw1(this.withdrawForm.value.accno1,this.withdrawForm.value.pin1,this.withdrawForm.value.amount1)
+    if(result.status==true){
+      alert(result.message);
+      alert(result.balance) 
     }
+else{
+alert(result.message)
 }
-}
- }
+}}
 
