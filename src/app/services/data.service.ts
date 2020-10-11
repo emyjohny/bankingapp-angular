@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { environment } from '../../environments/environment'
+const options ={
+  withCredentials:true
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +25,12 @@ currentUser;
     localStorage.setItem("currentUser",JSON.stringify(this.currentUser))
   }}
   getTransactions(){
+    return this.http.get(environment.apiUrl+"/transactions",options)
 return this.accountDetails[this.currentUser.acno].transactions;
   
+  }
+  deleteTransaction(id){
+    return this.http.delete(environment.apiUrl+"/transactions/"+id ,options)
   }
   getDetails(){
     if(localStorage.getItem("accountDetails")){
@@ -32,9 +39,7 @@ return this.accountDetails[this.currentUser.acno].transactions;
     if(localStorage.getItem("currentUser")){
       this.currentUser=JSON.parse(localStorage.getItem("currentUser"));
     }
-    
-
-  }
+   }
   register(name,acno,pin,password){
     const data={
       name,
@@ -44,7 +49,7 @@ return this.accountDetails[this.currentUser.acno].transactions;
       balance:0,
       transactions:[]
     }
-    return this.http.post("http://localhost:3000/register",data)
+    return this.http.post(environment.apiUrl+"/register",data)
   }
  
   
@@ -54,80 +59,34 @@ return this.accountDetails[this.currentUser.acno].transactions;
      acno,
      password
    }
-    return this.http.post("http://localhost:3000/login",data)
+    return this.http.post(environment.apiUrl+"/login",data,options)
 
-    // if(acno in data){
-    //   var pwd =data[acno].password
-    //   if(pwd==password){
-    //     this.currentUser=data[acno];
-    //     this.saveDetails();
-    // return true;
+    
       }
   
-  deposit(accnum,pin1,amount1){
-    var pinnum=parseInt(pin1)
+  deposit(acno,pin1,amount1){
+    var pin=parseInt(pin1)
     var amount=Number(amount1)
-    var data=this.accountDetails;
-    if(accnum in data){
-      let mpin=data[accnum].pin;
-      if(mpin==pinnum){
-         data[accnum].balance+=amount;
-         data[accnum].transactions.push({
-          amount:amount,
-          type:"credit"
-         })
-         this.saveDetails();
-         return {
-           status:true,
-           message:"amount credited",
-           balance: data[accnum].balance
-         }
-         
-      }
-      else{
-        return{
-          status:false,
-          message:"invalid cred",
-        }
-        
-      }
-  }
+ 
+    const data ={
+      acno,
+      pin,
+      amount
+    }
+    return this.http.post(environment.apiUrl+"/deposit",data,options)
 
   }
-  withdraw1(accnum,pin1,amount1){
-    var pinnum=parseInt(pin1);
+  withdraw1(acno,pin1,amount1){
+    var pin=parseInt(pin1);
     var amount=Number(amount1); 
-    var data=this.accountDetails;
-    if(accnum in data){
-      let mpin=data[accnum].pin;
-      if(amount>data[accnum].balance){
-        return{
-          status:false,
-          message:"insufficient balance",
-          balance:data[accnum].balance
-        }
-      }
-      else if(mpin==pinnum){
-        
-         data[accnum].balance-=amount;
-         data[accnum].transactions.push({
-           amount:amount,
-           type:"Debit"
-         })
-         this.saveDetails();
-         return{
-          status:true,
-          message:"account has been debited",
-          balance:data[accnum].balance
-        }
-        }
-        else{
-          return{
-            status:false,
-            message:"invalid cred"
-          }
-        }
-      }
-  }
+    const data ={
+      acno,
+      pin,
+      amount
+    }
+   return this.http.post(environment.apiUrl+"/withdraw",data,options)
+
+  
+   }
   }
 

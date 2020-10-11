@@ -1,19 +1,25 @@
 <div class="container">
     <div class="jumbotron">
-        <h1>Transaction History</h1>
+        <h1 appHighlight >Transaction History</h1>
         <div class="row">
             <div class="col">
+                <app-animation-demo></app-animation-demo>
+                <app-delete-confirmation (onDelete)="deleteTransaction($event)" (onCancel)="onCancel($event)" [id]="id"></app-delete-confirmation>
 <table>
     <thead>
         <tr>
+            <th>ID</th>
             <th>Amount</th>
             <th>Type</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let transaction of transactions">
+
+        <tr [ngClass]="id==transaction._id? 'grey':''" *ngFor="let transaction of transactions">
+            <td>{{transaction._id}}</td>
             <td>{{transaction.amount}}</td>
-            <td>{{transaction.type}}</td>
+            <td>{{transaction.typeOfTransaction}}</td>
+            <td> <button class="btn btn-primary"(click)="showConfirmationDialog(transaction._id)">Delete</button> </td>
         </tr>
     
     </tbody>

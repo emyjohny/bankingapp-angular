@@ -24,13 +24,21 @@ name=""
  }
   deposit(){
         const result=this.dataService.deposit(this.depositForm.value.accno,this.depositForm.value.pin,this.depositForm.value.amount)
-    if(result.status==true){
-      alert(result.message);
-      alert(result.balance) 
-    }
-else{
-alert(result.message)
-}
+        .subscribe((data:any)=>{
+          alert(data.message);
+      alert(data.balance) 
+    // alert() 
+        },(data)=>{
+          alert(data.error.message);
+        })
+
+//     if(result.status==true){
+//       alert(result.message);
+//       alert(result.balance) 
+//     }
+// else{
+// alert(result.message)
+// }
 }
 
 withdrawForm=this.fb.group({
@@ -45,12 +53,19 @@ withdrawError(field){
 withdraw(){
  
     const result=this.dataService.withdraw1(this.withdrawForm.value.accno1,this.withdrawForm.value.pin1,this.withdrawForm.value.amount1)
-    if(result.status==true){
-      alert(result.message);
-      alert(result.balance) 
-    }
-else{
-alert(result.message)
-}
+    .subscribe((data:any)=>{
+      console.log(data)
+      alert(data.message);
+    alert(data.balance) 
+    },data=>{
+      alert(data.error.message);
+    })
+//     if(result.status==true){
+//       alert(result.message);
+//       alert(result.balance) 
+//     }
+// else{
+// alert(result.message)
+// }
 }}
 
